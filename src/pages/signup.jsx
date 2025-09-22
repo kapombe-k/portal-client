@@ -1,9 +1,8 @@
 "use client";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+import { Label } from "../components/ui/label";
+import { Input } from "../components/ui/input";
 import { cn } from "@/lib/utils";
-import { BottomGradient } from "../ui/bottom-gradient";
-
+import { useState } from "react";
 
 export function SignupForm() {
     const [formData, setFormData] = useState({
@@ -18,6 +17,7 @@ export function SignupForm() {
         setFormData((prevData) => ({ ...prevData, [name]: value }));
         console.log(`Field ${name} changed to ${value}`);
     }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const signUp = async () => {
@@ -42,6 +42,7 @@ export function SignupForm() {
         setFormData({ firstName: "", lastName: "", email: "", password: "" });
         console.log("Form submitted");
     };
+
     return (
         <div
             className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
@@ -85,15 +86,13 @@ export function SignupForm() {
                     <a
                         href="/signup"
                         className="text-sm font-semibold text-blue-600 hover:underline dark:text-blue-400">
-                        Sign Up here &rarr;
-                    </a>
-
-                
+                        Log In here &rarr;
+                    </a>                
                 </div>
             </form>
         </div>
     );
-}
+};
 
 const BottomGradient = () => {
     return (
@@ -116,4 +115,5 @@ const LabelInputContainer = ({
         </div>
     );
 };
+
 export default SignupForm;

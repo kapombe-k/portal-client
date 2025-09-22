@@ -1,8 +1,8 @@
 "use client";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+import { Label } from "../components/ui/label";
+import { Input } from "../components/ui/input";
 import { cn } from "@/lib/utils";
-import { BottomGradient } from "../ui/bottom-gradient";
+import { useState } from "react";
 
 
 export function SignInForm() {
@@ -63,7 +63,7 @@ export function SignInForm() {
                 <button
                     className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
                     type="submit">
-                    Sign up &rarr;
+                    Log In &rarr;
                     <BottomGradient />
                 </button>
 
@@ -72,17 +72,15 @@ export function SignInForm() {
                         Don't have an account?
                     </span>
                     <a
-                        href="/login"
+                        href="/signup"
                         className="text-sm font-semibold text-blue-600 hover:underline dark:text-blue-400">
-                        Log in
-                    </a>
-
-                
+                        Sign Up here &rarr;
+                    </a>                
                 </div>
             </form>
         </div>
     );
-}
+};
 
 const BottomGradient = () => {
     return (
@@ -105,4 +103,5 @@ const LabelInputContainer = ({
         </div>
     );
 };
+
 export default SignInForm;
