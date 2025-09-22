@@ -13,8 +13,10 @@ export function SignInForm() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
         console.log(`Field ${name} changed to ${value}`);
     }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const signIn = async () => {
@@ -39,6 +41,7 @@ export function SignInForm() {
         setFormData({ email: "", password: "" });
         console.log("Form submitted");
     };
+
     return (
         <div
             className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
@@ -66,7 +69,7 @@ export function SignInForm() {
 
                 <div className="mt-4 flex items-center justify-between">
                     <span className="text-sm text-neutral-500 dark:text-neutral-400">
-                        Already have an account?
+                        Don't have an account?
                     </span>
                     <a
                         href="/login"

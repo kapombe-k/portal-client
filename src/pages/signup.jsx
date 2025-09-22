@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { BottomGradient } from "../ui/bottom-gradient";
 
 
-export function SignupFormDemo() {
+export function SignupForm() {
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -15,6 +15,7 @@ export function SignupFormDemo() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
         console.log(`Field ${name} changed to ${value}`);
     }
     const handleSubmit = (e) => {
@@ -82,9 +83,9 @@ export function SignupFormDemo() {
                         Already have an account?
                     </span>
                     <a
-                        href="/login"
+                        href="/signup"
                         className="text-sm font-semibold text-blue-600 hover:underline dark:text-blue-400">
-                        Log in
+                        Sign Up here &rarr;
                     </a>
 
                 
@@ -115,4 +116,4 @@ const LabelInputContainer = ({
         </div>
     );
 };
-export default SignupFormDemo;
+export default SignupForm;
