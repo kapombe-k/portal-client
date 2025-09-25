@@ -1,5 +1,5 @@
-
-import { Card, CardContent } from "@/components/ui/card";
+import { useState } from "react";
+import { Card, CardContent } from "../components/ui/card.jsx";
 import { BASE_URL } from "../lib/utils";
 
 const stats = [
@@ -9,32 +9,34 @@ const stats = [
     { label: "Bundles Sold", value: "2,340" },
 ];
 
-const fetchStats = async () => {
-    try {
-        //setLoading(true);
-        const response = await fetch(`${BASE_URL}/stats`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        console.log(data);
-    } catch (error) {
-        console.error('Error fetching stats:', error);
-    } finally {
-        // setLoading(false)
-    }
-};
-
-useEffect(() => {
-    fetchStats();
-}, []);
-
 const DashboardHome = () => {
+    const [loading, setLoading] = useState(false)
+
+    const fetchStats = async () => {
+        try {
+            setLoading(true);
+            const response = await fetch(`${BASE_URL}/stats`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.error('Error fetching stats:', error);
+        } finally {
+            setLoading(false)
+        }
+    };
+
+    fetchStats();
+
+    if (loading) return <div>Loading...</div>
+
     return (
         <div>
             <h2 className="text-2xl font-bold mb-6">Overview</h2>

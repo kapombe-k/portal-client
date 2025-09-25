@@ -1,35 +1,33 @@
-import { Link } from "react-router";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { BASE_URL } from "../lib/utils";
 
-const plans = [
-    { name: "1 GB", duration: "Valid for 1 Day", price: 50 },
-    { name: "5 GB", duration: "Valid for 7 Days", price: 200 },
-    { name: "Unlimited", duration: "Valid for 30 Days", price: 1500 },
-];
-
 const Plans = () => {
-    const [loading, setLoading] = useState(true);
+    console.log('Plans component rendering'); // Log to check if component renders
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    //const [plans, setPlans] = useState([]);
+    const [plans, setPlans] = useState([
+        { name: "1 GB", duration: "Valid for 1 Day", price: 50 },
+        { name: "5 GB", duration: "Valid for 7 Days", price: 200 },
+        { name: "Unlimited", duration: "Valid for 30 Days", price: 1500 },
+    ]);
 
-    useEffect(() => {
-        const fetchPlans = async () => {
-            try {
-                const response = await fetch(`${BASE_URL}/plans`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                setPlans(data);
-            } catch (error) {
-                setError(error);
-            } finally {
-                setLoading(false);
+    const fetchPlans = async () => {
+        try {
+            setLoading(true);
+            const response = await fetch(`${BASE_URL}/plans`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-        };
-
-        fetchPlans();
-    }, []);
+            const data = await response.json();
+            //setPlans(data)
+            setPlans(data);
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card.jsx";
+import { Button } from "../components/ui/button.jsx";
+import { Input } from "../components/ui/input.jsx";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../components/ui/table.jsx";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../components/ui/dialog.jsx";
 import { BASE_URL } from "../lib/utils";
+
+console.log('UI Components:', { Card, Button, Table, Dialog });
 
 const mockBundles = [
     { id: 1, name: "Daily 1GB", price: 50, duration: "1 Day", quota: "1 GB" },
@@ -30,7 +32,7 @@ export default function BundlesPage() {
                 if (!response.ok) {
                     console.error("Failed to fetch bundles")
                 };
-                const data = response.json();
+                const data = await response.json();
                 console.log(data)
                 setBundles(data);
             } catch (error) {
