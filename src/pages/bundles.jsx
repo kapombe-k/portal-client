@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { BASE_URL } from "../lib/utils";
 
 const plans = [
     { name: "1 GB", duration: "Valid for 1 Day", price: 50 },
@@ -7,6 +8,32 @@ const plans = [
 ];
 
 const Plans = () => {
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    //const [plans, setPlans] = useState([]);
+
+    useEffect(() => {
+        const fetchPlans = async () => {
+            try {
+                const response = await fetch(`${BASE_URL}/plans`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setPlans(data);
+            } catch (error) {
+                setError(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPlans();
+    }, []);
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error.message}</div>;
+
     return (
         <div className="min-h-screen bg-gray-50 p-6">
             <h1 className="text-3xl font-bold text-center mb-10">Available WiFi Plans</h1>

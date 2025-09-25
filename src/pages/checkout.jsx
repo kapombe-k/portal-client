@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router";
+import { BASE_URL } from "../lib/utils";
 
 const Checkout = () => {
     const [searchParams] = useSearchParams();
     const planName = searchParams.get("plan");
     const planPrice = searchParams.get("price");
     const [phone, setPhone] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handlePayment = async (e) => {
         e.preventDefault();
-
+        setLoading(true);
         try {
-            const res = await fetch("http://localhost:5000/api/pay", {
+            const res = await fetch(`${BASE_URL}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -26,8 +28,12 @@ const Checkout = () => {
         } catch (error) {
             console.error(error);
             alert("Something went wrong. Please try again.");
-        }
+        } finally {
+            setLoading(false);
+        };
     };
+
+    if (loading) return <div>Loading...</div>
 
     return (
         <div className="min-h-screen flex justify-center items-center bg-gray-50">
