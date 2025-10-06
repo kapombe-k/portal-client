@@ -2,44 +2,40 @@
 import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { BASE_URL } from "../lib/utils";
 
+
+const signinSchema = z.object({
+    email: z.string().email("Invalid email address"),
+    password: z.string().min(1, "Password is required"),
+});
 
 export function SignInForm() {
-    const [formData, setFormData] = useState({
-        email: "",
-        password: ""
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+        resolver: zodResolver(signinSchema),
     });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({ ...prevData, [name]: value }));
-        console.log(`Field ${name} changed to ${value}`);
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const signIn = async () => {
-            try {
-                const res = await fetch("/api/signin", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(formData)
-                });
-                if (!res.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                const data = await res.json();
-                console.log("Signup successful:", data);
-            } catch (error) {
-                console.error("Error during signup:", error);
+    const onSubmit = async (data) => {
+        try {
+            const res = await fetch(`${BASE_URL}/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+            if (!res.ok) {
+                throw new Error("Network response was not ok");
             }
-        };
-        signIn();
-        setFormData({ email: "", password: "" });
-        console.log("Form submitted");
+            const responseData = await res.json();
+            console.log("Signin successful:", responseData);
+            reset();
+        } catch (error) {
+            console.error("Error during signin:", error);
+        }
     };
 
     return (
@@ -51,15 +47,17 @@ export function SignInForm() {
             <h3 className="text-lg font-semibold text-neutral-700 dark:text-neutral-400">
                 Sign in to continue
             </h3>
-            <form className="my-8" onSubmit={handleSubmit}>                
+            <form className="my-8" onSubmit={handleSubmit(onSubmit)}>
                 <LabelInputContainer className="mb-4">
                     <Label htmlFor="email">Email Address</Label>
-                    <Input id="email" placeholder="projectmayhem@fc.com" type="email" value={formData.email} onChange={handleChange} />
+                    <Input id="email" placeholder="projectmayhem@fc.com" type="email" {...register("email")} />
                 </LabelInputContainer>
+                {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
                 <LabelInputContainer className="mb-4">
                     <Label htmlFor="password">Password</Label>
-                    <Input id="password" placeholder="••••••••" type="password" value={formData.password} onChange={handleChange} />
+                    <Input id="password" placeholder="••••••••" type="password" {...register("password")} />
                 </LabelInputContainer>
+                {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
                 <button
                     className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
                     type="submit">
