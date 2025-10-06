@@ -10,7 +10,7 @@ import { BASE_URL } from "../lib/utils";
 const signupSchema = z.object({
     userName: z.string().min(1, "Username is required"),
     phoneNumber: z.string().min(1, "Phone number is required"),
-    email: z.string().email("Invalid email address"),
+    email: z.email("Invalid email address"),
     password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
@@ -21,7 +21,7 @@ export function SignupForm() {
 
     const onSubmit = async (data) => {
         try {
-            const res = await fetch(`${BASE_URL}/signup`, {
+            const res = await fetch(`${BASE_URL}/auth/signup`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

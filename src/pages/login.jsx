@@ -9,7 +9,7 @@ import { BASE_URL } from "../lib/utils";
 
 
 const signinSchema = z.object({
-    email: z.string().email("Invalid email address"),
+    email: z.email("Invalid email address"),
     password: z.string().min(1, "Password is required"),
 });
 
@@ -20,7 +20,7 @@ export function SignInForm() {
 
     const onSubmit = async (data) => {
         try {
-            const res = await fetch(`${BASE_URL}/login`, {
+            const res = await fetch(`${BASE_URL}/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
