@@ -6,8 +6,7 @@ import { useState } from "react";
 
 export function SignupForm() {
     const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
+        UserName: "",
         email: "",
         password: ""
     });
@@ -39,7 +38,7 @@ export function SignupForm() {
             }
         };
         signUp();
-        setFormData({ firstName: "", lastName: "", email: "", password: "" });
+        setFormData({ userName: "", email: "", password: "" });
         console.log("Form submitted");
     };
 
@@ -56,12 +55,8 @@ export function SignupForm() {
                 <div
                     className="mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
                     <LabelInputContainer>
-                        <Label htmlFor="firstname">First name</Label>
-                        <Input id="firstname" placeholder="Tyler" type="text" value={formData.firstName} onChange={handleChange} />
-                    </LabelInputContainer>
-                    <LabelInputContainer>
-                        <Label htmlFor="lastname">Last name</Label>
-                        <Input id="lastname" placeholder="Durden" type="text" value={formData.lastName} onChange={handleChange} />
+                        <Label htmlFor="firstname">User Name</Label>
+                        <Input id="firstname" placeholder="Kasongo254" type="text" value={formData.UserName} onChange={handleChange} />
                     </LabelInputContainer>
                 </div>
                 <LabelInputContainer className="mb-4">
