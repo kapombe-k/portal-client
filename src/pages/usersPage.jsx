@@ -1,10 +1,11 @@
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+import { useState } from "react";
+import { BASE_URL } from "../lib/utils";
+
 const UsersPage = () => {
     // mock data
-    const [users, setUsers] = useState([
-        { id: 1, name: "John Doe", phone: "0712345678", created: "2025-09-01" },
-        { id: 2, name: "Jane Smith", phone: "0798765432", created: "2025-09-05" },
-    ]);
+    const mockData = [{ id: 1, name: "John Doe", phone: "0712345678", created: "2025-09-01" },
+        { id: 2, name: "Jane Smith", phone: "0798765432", created: "2025-09-05" },]
+    const [users, setUsers] = useState(mockData);
     const [loading, setLoading] = useState(false);
 
     
@@ -30,9 +31,9 @@ const UsersPage = () => {
         }
     };
 
-    useEffect(() => {
-        fetchUsers();
-    }, []);
+    // useEffect(() => {
+    //     fetchUsers();
+    // }, []);
     
     if (loading)return <div>Loading...</div>
 

@@ -60,9 +60,9 @@ export default function SupportTicketsPage() {
         }
     }
 
-    useEffect(()=>{
-        fetchTickets();
-    },[])
+    // useEffect(()=>{
+    //     fetchTickets();
+    // },[])
 
     const statusColors = {
         OPEN: "bg-red-500 text-white",

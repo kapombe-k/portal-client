@@ -33,7 +33,7 @@ const DashboardHome = () => {
         }
     };
 
-    fetchStats();
+    //fetchStats();
 
     if (loading) return <div>Loading...</div>
 

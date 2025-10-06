@@ -19,35 +19,37 @@ export default function BundlesPage() {
     const [loading, setloading] = useState(false)
     const [newBundle, setNewBundle] = useState({ name: "", price: "", duration: "", quota: "" });
 
-    useEffect(() => {
-        const fetchBundles = async () => {
-            try {
-                setloading(true)
-                const response = await fetch(`${BASE_URL}/bundles`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                if (!response.ok) {
-                    console.error("Failed to fetch bundles")
-                };
-                const data = await response.json();
-                console.log(data)
-                setBundles(data);
-            } catch (error) {
-                console.error(`A ${error} occurred`, error)
-            } finally {
-                setloading(false);
-            };
-        };
-        fetchBundles();
-    });
+    // useEffect(() => {
+    //     const fetchBundles = async () => {
+    //         try {
+    //             setloading(true)
+    //             const response = await fetch(`${BASE_URL}/bundles`, {
+    //                 method: 'GET',
+    //                 headers: {
+    //                     'Content-Type': 'application/json'
+    //                 }
+    //             });
+    //             if (!response.ok) {
+    //                 console.error("Failed to fetch bundles")
+    //             };
+    //             const data = await response.json();
+    //             console.log(data)
+    //             setBundles(data);
+    //         } catch (error) {
+    //             console.error(`A ${error} occurred`, error)
+    //         } finally {
+    //             setloading(false);
+    //         };
+    //     };
+    //     fetchBundles();
+    // });
 
     const addBundle = () => {
+        setLoading(true);
         if (!newBundle.name || !newBundle.price) return;
         setBundles([...bundles, { id: bundles.length + 1, ...newBundle }]);
         setNewBundle({ name: "", price: "", duration: "", quota: "" });
+        setloading(false);
     };
 
     const deleteBundle = (id) => {
