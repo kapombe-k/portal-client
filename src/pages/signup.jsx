@@ -6,15 +6,17 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { BASE_URL } from "../lib/utils";
+import { useNavigate } from "react-router";
 
 const signupSchema = z.object({
-    userName: z.string().min(1, "Username is required"),
-    phoneNumber: z.string().min(1, "Phone number is required"),
+    username: z.string().min(1, "Username is required"),
+    phone: z.string().min(1, "Phone number is required"),
     email: z.email("Invalid email address"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
+    password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
 export function SignupForm() {
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         resolver: zodResolver(signupSchema),
     });
@@ -33,7 +35,7 @@ export function SignupForm() {
             }
             const responseData = await res.json();
             console.log("Signup successful:", responseData);
-            reset();
+            navigate('/login');
         } catch (error) {
             console.error("Error during signup:", error);
         }
@@ -52,15 +54,15 @@ export function SignupForm() {
                 <div
                     className="mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
                     <LabelInputContainer>
-                        <Label htmlFor="firstname">User Name</Label>
-                        <Input id="firstname" placeholder="Kasongo254" type="text" {...register("userName")} />
+                        <Label htmlFor="username">Username</Label>
+                        <Input id="username" placeholder="Username" type="text" {...register("username")} />
                     </LabelInputContainer>
-                    {errors.userName && <p className="text-red-500 text-sm">{errors.userName.message}</p>}
+                    {errors.username && <p className="text-red-500 text-sm">{errors.username.message}</p>}
                     <LabelInputContainer>
                         <Label htmlFor="phone">Phone Number</Label>
-                        <Input id="phone number" placeholder="" type="text" {...register("phoneNumber")} />
+                        <Input id="phone" placeholder="0712345678" type="text" {...register("phone")} />
                     </LabelInputContainer>
-                    {errors.phoneNumber && <p className="text-red-500 text-sm">{errors.phoneNumber.message}</p>}
+                    {errors.phone && <p className="text-red-500 text-sm">{errors.phone.message}</p>}
                 </div>
                 <LabelInputContainer className="mb-4">
                     <Label htmlFor="email">Email Address</Label>
@@ -84,10 +86,10 @@ export function SignupForm() {
                         Already have an account?
                     </span>
                     <a
-                        href="/signup"
+                        href="/login"
                         className="text-sm font-semibold text-blue-600 hover:underline dark:text-blue-400">
                         Log In here &rarr;
-                    </a>                
+                    </a>
                 </div>
             </form>
         </div>

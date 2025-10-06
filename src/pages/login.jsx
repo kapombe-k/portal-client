@@ -3,6 +3,7 @@ import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import { cn } from "@/lib/utils";
 import { useForm } from 'react-hook-form';
+import { useNavigate } from "react-router";
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { BASE_URL } from "../lib/utils";
@@ -14,6 +15,7 @@ const signinSchema = z.object({
 });
 
 export function SignInForm() {
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         resolver: zodResolver(signinSchema),
     });
@@ -32,7 +34,7 @@ export function SignInForm() {
             }
             const responseData = await res.json();
             console.log("Signin successful:", responseData);
-            reset();
+            navigate('/home');
         } catch (error) {
             console.error("Error during signin:", error);
         }
